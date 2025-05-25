@@ -51,6 +51,7 @@
             delBtn.TabIndex = 2;
             delBtn.Text = "Supprimer un repository";
             delBtn.UseVisualStyleBackColor = true;
+            delBtn.Click += delBtn_Click;
             // 
             // tagsManBtn
             // 

@@ -30,21 +30,27 @@ namespace RegUI
                 {
                     regAdrTbx.Text += "/";
                     host_registry = regAdrTbx.Text;
-                    MessageBox.Show(host_registry);
                 }
 
                 HttpClient http = new HttpClient();
                 HttpResponseMessage response = await http.GetAsync(regAdrTbx.Text + "/v2/_catalog");
-                string stringRes = await response.Content.ReadAsStringAsync();
-                var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
-
-                if (catalog != null && catalog.repositories != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    repositoriesListBox.Items.Clear();
-                    foreach (var repo in catalog.repositories)
+                    string stringRes = await response.Content.ReadAsStringAsync();
+                    var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
+
+                    if (catalog != null && catalog.repositories != null)
                     {
-                        repositoriesListBox.Items.Add(repo);
+                        repositoriesListBox.Items.Clear();
+                        foreach (var repo in catalog.repositories)
+                        {
+                            repositoriesListBox.Items.Add(repo);
+                        }
                     }
+                }
+                else
+                {
+                    MessageBox.Show("RegUI n'est pas parvenue à se connecter au registre Docker", "Problème de connexion", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -55,13 +61,32 @@ namespace RegUI
 
         private void tagsManBtn_Click(object sender, EventArgs e)
         {
-            gestTag nForm = new gestTag(host_registry,repositoriesListBox.SelectedItem.ToString());
-            nForm.Show();
+            if (host_registry != null)
+            {
+                if (repositoriesListBox.SelectedItem != null)
+                {
+                    gestTag nForm = new gestTag(host_registry, repositoriesListBox.SelectedItem.ToString());
+                    nForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Aucun repository n'a été sélectionné", "Avertissement", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aucun registre docker n'a été spécifié", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void gestReg_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void delBtn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Fonctionnalité en cours de développement", "A venir...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
