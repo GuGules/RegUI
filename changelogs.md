@@ -6,4 +6,3 @@
 
 - Première release de l'application.
 - Interface simple permettant la gestion d'un registre Docker auto-hébergé.
-- Ne prend pas en charge l'identification.
