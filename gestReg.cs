@@ -38,7 +38,7 @@ namespace RegUI
 
         private async void connectRegister()
         {
-            if (regAdrTbx.Text != "")//& (regAdrTbx.Text.StartsWith("http://") || regAdrTbx.Text.StartsWith("https://"))
+            if (regAdrTbx.Text != "") //& (regAdrTbx.Text.StartsWith("http://") || regAdrTbx.Text.StartsWith("https://"))
             {
                 // AJOUT AUTO /
                 if (!regAdrTbx.Text.EndsWith('/'))
@@ -51,7 +51,7 @@ namespace RegUI
                 {
                     if (!regAdrTbx.Text.StartsWith("http://"))
                     {
-                        //Ajout auto HTTP / HTTPS
+                        // Ajout auto HTTP / HTTPS
                         try
                         {
                             if (URI_isOK("https://" + host_registry))

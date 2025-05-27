@@ -89,7 +89,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(535, 499);
+            ClientSize = new Size(529, 499);
             Controls.Add(rmTagBtn);
             Controls.Add(cmdPullBtn);
             Controls.Add(genCmdBtn);

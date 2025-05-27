@@ -117,7 +117,15 @@ namespace RegUI
 
         private void genCmdBtn_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Fonctionnalité en cours de développement", "A venir...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (tagsLB.SelectedItem.ToString() != null)
+            {
+                genCmd frm0 = new genCmd(this.host_registry,repoName,tagsLB.SelectedItem.ToString());
+                frm0.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Aucun tag n'a été sélectionné", "Problème de tag", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
