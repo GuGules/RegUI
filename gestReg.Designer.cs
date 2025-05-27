@@ -42,6 +42,7 @@
             regAdrTbx.Name = "regAdrTbx";
             regAdrTbx.Size = new Size(269, 23);
             regAdrTbx.TabIndex = 0;
+            regAdrTbx.KeyDown += regAdrTbx_KeyDown;
             // 
             // delBtn
             // 

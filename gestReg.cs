@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.Json;
 using RegUI.models;
+using System.Text.RegularExpressions;
+using static System.Net.WebRequestMethods;
 
 namespace RegUI
 {
@@ -21,30 +23,97 @@ namespace RegUI
         }
 
         private string host_registry;
+        private HttpClient http = new HttpClient();
 
-        private async void fetchBtn_Click(object sender, EventArgs e)
+        private Boolean URI_isOK(string url)
         {
-            if (regAdrTbx.Text != "" & (regAdrTbx.Text.StartsWith("http://") || regAdrTbx.Text.StartsWith("https://")))
+            /*
+             * Fonction qui vérifie la bonne construction de l'URL
+             * Entrée : une chaine de caractère (url)
+             * Sortie : un booléen qui indique la bonne construction de l'URL
+             */
+
+            return Regex.IsMatch(url, @"^https?://((localhost:?\d+)|.+\..+)");
+        }
+
+        private async void connectRegister()
+        {
+            if (regAdrTbx.Text != "")//& (regAdrTbx.Text.StartsWith("http://") || regAdrTbx.Text.StartsWith("https://"))
             {
+                // AJOUT AUTO /
                 if (!regAdrTbx.Text.EndsWith('/'))
                 {
                     regAdrTbx.Text += "/";
                     host_registry = regAdrTbx.Text;
                 }
 
-                HttpClient http = new HttpClient();
-                HttpResponseMessage response = await http.GetAsync(regAdrTbx.Text + "/v2/_catalog");
-                if (response.IsSuccessStatusCode)
+                if (!regAdrTbx.Text.StartsWith("https://"))
                 {
-                    string stringRes = await response.Content.ReadAsStringAsync();
-                    var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
-
-                    if (catalog != null && catalog.repositories != null)
+                    if (!regAdrTbx.Text.StartsWith("http://"))
                     {
-                        repositoriesListBox.Items.Clear();
-                        foreach (var repo in catalog.repositories)
+                        //Ajout auto HTTP / HTTPS
+                        try
                         {
-                            repositoriesListBox.Items.Add(repo);
+                            if (URI_isOK("https://" + host_registry))
+                            {
+                                HttpResponseMessage r1 = await http.GetAsync("https://" + host_registry);
+                                if (r1.IsSuccessStatusCode)
+                                {
+                                    host_registry = "https://" + host_registry;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Le registre a refusé la connexion", "Connexion refusée", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            } else
+                            {
+                                MessageBox.Show("L'url n'est pas valide","URL invalide",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            try
+                            {
+                                if (URI_isOK("http://" + host_registry))
+                                {
+                                    HttpResponseMessage r1 = await http.GetAsync("http://" + host_registry);
+                                    if (r1.IsSuccessStatusCode)
+                                    {
+                                        host_registry = "http://" + host_registry;
+                                        MessageBox.Show("Le registre ne dispose de certificat SSL permettant une connexion HTTP sécurisée", "Avertissement", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Le registre a refusé la connexion", "Connexion refusée", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("L'url n'est pas valide", "URL invalide", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Impossible de se connecter au registre", "Problème de connexion", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    if (URI_isOK(host_registry))
+                    {
+                        HttpResponseMessage response = await http.GetAsync(host_registry + "/v2/_catalog");
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string stringRes = await response.Content.ReadAsStringAsync();
+                            var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
+
+                            if (catalog != null && catalog.repositories != null)
+                            {
+                                repositoriesListBox.Items.Clear();
+                                foreach (var repo in catalog.repositories)
+                                {
+                                    repositoriesListBox.Items.Add(repo);
+                                }
+                            }
                         }
                     }
                 }
@@ -57,6 +126,11 @@ namespace RegUI
             {
                 MessageBox.Show("Veuillez renseigner une URL valide pour le registre \n\nExemple : http[s]://registre.domain.com/", "Adresse de registre invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void fetchBtn_Click(object sender, EventArgs e)
+        {
+            connectRegister();
         }
 
         private void tagsManBtn_Click(object sender, EventArgs e)
@@ -79,14 +153,21 @@ namespace RegUI
             }
         }
 
-        private void gestReg_Load(object sender, EventArgs e)
+        private async void gestReg_Load(object sender, EventArgs e)
         {
-
         }
 
         private void delBtn_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Fonctionnalité en cours de développement", "A venir...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void regAdrTbx_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                connectRegister();
+            }
         }
     }
 }
