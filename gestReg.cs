@@ -65,9 +65,10 @@ namespace RegUI
                                 {
                                     MessageBox.Show("Le registre a refusé la connexion", "Connexion refusée", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
-                            } else
+                            }
+                            else
                             {
-                                MessageBox.Show("L'url n'est pas valide","URL invalide",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                                MessageBox.Show("L'url n'est pas valide", "URL invalide", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception)
@@ -168,6 +169,11 @@ namespace RegUI
             {
                 connectRegister();
             }
+        }
+
+        private void fermerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

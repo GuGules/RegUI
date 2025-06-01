@@ -49,7 +49,7 @@
             // 
             tagsLB.FormattingEnabled = true;
             tagsLB.ItemHeight = 15;
-            tagsLB.Location = new Point(8, 38);
+            tagsLB.Location = new Point(6, 38);
             tagsLB.Name = "tagsLB";
             tagsLB.Size = new Size(323, 454);
             tagsLB.Sorted = true;
