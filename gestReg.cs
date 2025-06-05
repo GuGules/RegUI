@@ -175,5 +175,11 @@ namespace RegUI
         {
             this.Close();
         }
+
+        private void genComposeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            genCompose gcp = new genCompose();
+            gcp.Show();
+        }
     }
 }

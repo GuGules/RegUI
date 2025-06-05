@@ -37,6 +37,7 @@
             menuStrip1 = new MenuStrip();
             applicationToolStripMenuItem = new ToolStripMenuItem();
             fermerToolStripMenuItem = new ToolStripMenuItem();
+            genComposeToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { applicationToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { applicationToolStripMenuItem, genComposeToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(926, 24);
@@ -106,9 +107,16 @@
             // fermerToolStripMenuItem
             // 
             fermerToolStripMenuItem.Name = "fermerToolStripMenuItem";
-            fermerToolStripMenuItem.Size = new Size(180, 22);
+            fermerToolStripMenuItem.Size = new Size(111, 22);
             fermerToolStripMenuItem.Text = "Fermer";
             fermerToolStripMenuItem.Click += fermerToolStripMenuItem_Click;
+            // 
+            // genComposeToolStripMenuItem
+            // 
+            genComposeToolStripMenuItem.Name = "genComposeToolStripMenuItem";
+            genComposeToolStripMenuItem.Size = new Size(91, 20);
+            genComposeToolStripMenuItem.Text = "GenCompose";
+            genComposeToolStripMenuItem.Click += genComposeToolStripMenuItem_Click;
             // 
             // gestReg
             // 
@@ -142,5 +150,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem applicationToolStripMenuItem;
         private ToolStripMenuItem fermerToolStripMenuItem;
+        private ToolStripMenuItem genComposeToolStripMenuItem;
     }
 }
