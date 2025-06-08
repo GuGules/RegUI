@@ -28,36 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tbcGenCompose = new TabControl();
-            tabPage1 = new TabPage();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(genCompose));
+            outputPage = new TabPage();
+            composeFileEditor = new RichTextBox();
+            saveFileBtn = new Button();
+            copyBtn = new Button();
+            setupPage = new TabPage();
             nxtBtn0 = new Button();
-            tabPage2 = new TabPage();
-            richTextBox1 = new RichTextBox();
+            tbcGenCompose = new TabControl();
+            servicesListBox = new ListBox();
+            srvcLbl = new Label();
+            outputPage.SuspendLayout();
+            setupPage.SuspendLayout();
             tbcGenCompose.SuspendLayout();
-            tabPage1.SuspendLayout();
-            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
-            // tbcGenCompose
+            // outputPage
             // 
-            tbcGenCompose.Controls.Add(tabPage1);
-            tbcGenCompose.Controls.Add(tabPage2);
-            tbcGenCompose.Location = new Point(1, 2);
-            tbcGenCompose.Name = "tbcGenCompose";
-            tbcGenCompose.SelectedIndex = 0;
-            tbcGenCompose.Size = new Size(760, 600);
-            tbcGenCompose.TabIndex = 0;
+            outputPage.Controls.Add(copyBtn);
+            outputPage.Controls.Add(saveFileBtn);
+            outputPage.Controls.Add(composeFileEditor);
+            outputPage.Location = new Point(4, 24);
+            outputPage.Name = "outputPage";
+            outputPage.Padding = new Padding(3);
+            outputPage.Size = new Size(752, 572);
+            outputPage.TabIndex = 1;
+            outputPage.Text = "Génération du docker compose";
+            outputPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // composeFileEditor
             // 
-            tabPage1.Controls.Add(nxtBtn0);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(752, 572);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Page0";
-            tabPage1.UseVisualStyleBackColor = true;
+            composeFileEditor.Location = new Point(0, 45);
+            composeFileEditor.Name = "composeFileEditor";
+            composeFileEditor.Size = new Size(749, 521);
+            composeFileEditor.TabIndex = 1;
+            composeFileEditor.Text = "";
+            // 
+            // saveFileBtn
+            // 
+            saveFileBtn.Location = new Point(8, 10);
+            saveFileBtn.Name = "saveFileBtn";
+            saveFileBtn.Size = new Size(27, 23);
+            saveFileBtn.TabIndex = 2;
+            saveFileBtn.Text = "💾";
+            saveFileBtn.UseVisualStyleBackColor = true;
+            saveFileBtn.Click += saveFileBtn_Click;
+            // 
+            // copyBtn
+            // 
+            copyBtn.Location = new Point(41, 10);
+            copyBtn.Name = "copyBtn";
+            copyBtn.Size = new Size(27, 23);
+            copyBtn.TabIndex = 2;
+            copyBtn.Text = "🗒️";
+            copyBtn.UseVisualStyleBackColor = true;
+            copyBtn.Click += copyBtn_Click;
+            // 
+            // setupPage
+            // 
+            setupPage.Controls.Add(srvcLbl);
+            setupPage.Controls.Add(servicesListBox);
+            setupPage.Controls.Add(nxtBtn0);
+            setupPage.Location = new Point(4, 24);
+            setupPage.Name = "setupPage";
+            setupPage.Padding = new Padding(3);
+            setupPage.Size = new Size(752, 572);
+            setupPage.TabIndex = 0;
+            setupPage.Text = "Choix des services";
+            setupPage.UseVisualStyleBackColor = true;
             // 
             // nxtBtn0
             // 
@@ -65,49 +103,65 @@
             nxtBtn0.Name = "nxtBtn0";
             nxtBtn0.Size = new Size(93, 25);
             nxtBtn0.TabIndex = 0;
-            nxtBtn0.Text = "Suivant";
+            nxtBtn0.Text = "Générer";
             nxtBtn0.UseVisualStyleBackColor = true;
             nxtBtn0.Click += nxtBtn0_Click;
             // 
-            // tabPage2
+            // tbcGenCompose
             // 
-            tabPage2.Controls.Add(richTextBox1);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(752, 572);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Page1";
-            tabPage2.UseVisualStyleBackColor = true;
+            tbcGenCompose.Controls.Add(setupPage);
+            tbcGenCompose.Controls.Add(outputPage);
+            tbcGenCompose.Location = new Point(1, 2);
+            tbcGenCompose.Name = "tbcGenCompose";
+            tbcGenCompose.SelectedIndex = 0;
+            tbcGenCompose.Size = new Size(760, 600);
+            tbcGenCompose.TabIndex = 0;
             // 
-            // richTextBox1
+            // servicesListBox
             // 
-            richTextBox1.Location = new Point(0, 0);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(752, 522);
-            richTextBox1.TabIndex = 1;
-            richTextBox1.Text = "";
+            servicesListBox.FormattingEnabled = true;
+            servicesListBox.ItemHeight = 15;
+            servicesListBox.Location = new Point(7, 43);
+            servicesListBox.Name = "servicesListBox";
+            servicesListBox.Size = new Size(332, 259);
+            servicesListBox.TabIndex = 1;
+            // 
+            // srvcLbl
+            // 
+            srvcLbl.AutoSize = true;
+            srvcLbl.Location = new Point(7, 16);
+            srvcLbl.Name = "srvcLbl";
+            srvcLbl.Size = new Size(58, 15);
+            srvcLbl.TabIndex = 2;
+            srvcLbl.Text = "Services : ";
             // 
             // genCompose
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(762, 603);
+            ClientSize = new Size(762, 608);
             Controls.Add(tbcGenCompose);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "genCompose";
             Text = "Generation de Docker-Compose";
+            Load += genCompose_Load;
+            outputPage.ResumeLayout(false);
+            setupPage.ResumeLayout(false);
+            setupPage.PerformLayout();
             tbcGenCompose.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TabControl tbcGenCompose;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage outputPage;
+        private Button copyBtn;
+        private Button saveFileBtn;
+        private RichTextBox composeFileEditor;
+        private TabPage setupPage;
         private Button nxtBtn0;
-        private RichTextBox richTextBox1;
+        private TabControl tbcGenCompose;
+        private Label srvcLbl;
+        private ListBox servicesListBox;
     }
 }

@@ -53,6 +53,7 @@ namespace RegUI
 
         private async void gestTag_Load(object sender, EventArgs e)
         {
+            this.Text = Program.userLanguage;
             repoLbl.Text += repoName;
             loadTags();
         }
