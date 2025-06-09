@@ -30,17 +30,20 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(genCompose));
             outputPage = new TabPage();
-            composeFileEditor = new RichTextBox();
-            saveFileBtn = new Button();
             copyBtn = new Button();
+            saveFileBtn = new Button();
+            composeFileEditor = new RichTextBox();
             setupPage = new TabPage();
-            nxtBtn0 = new Button();
-            tbcGenCompose = new TabControl();
-            servicesListBox = new ListBox();
             srvcLbl = new Label();
+            servicesListBox = new ListBox();
+            genBtn = new Button();
+            tbcGenCompose = new TabControl();
+            volumePage = new TabPage();
+            nextBtn = new Button();
             outputPage.SuspendLayout();
             setupPage.SuspendLayout();
             tbcGenCompose.SuspendLayout();
+            volumePage.SuspendLayout();
             SuspendLayout();
             // 
             // outputPage
@@ -56,13 +59,15 @@
             outputPage.Text = "Génération du docker compose";
             outputPage.UseVisualStyleBackColor = true;
             // 
-            // composeFileEditor
+            // copyBtn
             // 
-            composeFileEditor.Location = new Point(0, 45);
-            composeFileEditor.Name = "composeFileEditor";
-            composeFileEditor.Size = new Size(749, 521);
-            composeFileEditor.TabIndex = 1;
-            composeFileEditor.Text = "";
+            copyBtn.Location = new Point(41, 10);
+            copyBtn.Name = "copyBtn";
+            copyBtn.Size = new Size(27, 23);
+            copyBtn.TabIndex = 2;
+            copyBtn.Text = "🗒️";
+            copyBtn.UseVisualStyleBackColor = true;
+            copyBtn.Click += copyBtn_Click;
             // 
             // saveFileBtn
             // 
@@ -74,48 +79,35 @@
             saveFileBtn.UseVisualStyleBackColor = true;
             saveFileBtn.Click += saveFileBtn_Click;
             // 
-            // copyBtn
+            // composeFileEditor
             // 
-            copyBtn.Location = new Point(41, 10);
-            copyBtn.Name = "copyBtn";
-            copyBtn.Size = new Size(27, 23);
-            copyBtn.TabIndex = 2;
-            copyBtn.Text = "🗒️";
-            copyBtn.UseVisualStyleBackColor = true;
-            copyBtn.Click += copyBtn_Click;
+            composeFileEditor.Location = new Point(0, 45);
+            composeFileEditor.Name = "composeFileEditor";
+            composeFileEditor.Size = new Size(749, 521);
+            composeFileEditor.TabIndex = 1;
+            composeFileEditor.Text = "";
             // 
             // setupPage
             // 
             setupPage.Controls.Add(srvcLbl);
             setupPage.Controls.Add(servicesListBox);
-            setupPage.Controls.Add(nxtBtn0);
+            setupPage.Controls.Add(genBtn);
             setupPage.Location = new Point(4, 24);
             setupPage.Name = "setupPage";
             setupPage.Padding = new Padding(3);
             setupPage.Size = new Size(752, 572);
             setupPage.TabIndex = 0;
-            setupPage.Text = "Choix des services";
+            setupPage.Text = "Configuration des services";
             setupPage.UseVisualStyleBackColor = true;
             // 
-            // nxtBtn0
+            // srvcLbl
             // 
-            nxtBtn0.Location = new Point(636, 540);
-            nxtBtn0.Name = "nxtBtn0";
-            nxtBtn0.Size = new Size(93, 25);
-            nxtBtn0.TabIndex = 0;
-            nxtBtn0.Text = "Générer";
-            nxtBtn0.UseVisualStyleBackColor = true;
-            nxtBtn0.Click += nxtBtn0_Click;
-            // 
-            // tbcGenCompose
-            // 
-            tbcGenCompose.Controls.Add(setupPage);
-            tbcGenCompose.Controls.Add(outputPage);
-            tbcGenCompose.Location = new Point(1, 2);
-            tbcGenCompose.Name = "tbcGenCompose";
-            tbcGenCompose.SelectedIndex = 0;
-            tbcGenCompose.Size = new Size(760, 600);
-            tbcGenCompose.TabIndex = 0;
+            srvcLbl.AutoSize = true;
+            srvcLbl.Location = new Point(7, 16);
+            srvcLbl.Name = "srvcLbl";
+            srvcLbl.Size = new Size(58, 15);
+            srvcLbl.TabIndex = 2;
+            srvcLbl.Text = "Services : ";
             // 
             // servicesListBox
             // 
@@ -126,14 +118,46 @@
             servicesListBox.Size = new Size(332, 259);
             servicesListBox.TabIndex = 1;
             // 
-            // srvcLbl
+            // genBtn
             // 
-            srvcLbl.AutoSize = true;
-            srvcLbl.Location = new Point(7, 16);
-            srvcLbl.Name = "srvcLbl";
-            srvcLbl.Size = new Size(58, 15);
-            srvcLbl.TabIndex = 2;
-            srvcLbl.Text = "Services : ";
+            genBtn.Location = new Point(652, 541);
+            genBtn.Name = "genBtn";
+            genBtn.Size = new Size(93, 25);
+            genBtn.TabIndex = 0;
+            genBtn.Text = "Générer";
+            genBtn.UseVisualStyleBackColor = true;
+            genBtn.Click += nxtBtn0_Click;
+            // 
+            // tbcGenCompose
+            // 
+            tbcGenCompose.Controls.Add(volumePage);
+            tbcGenCompose.Controls.Add(setupPage);
+            tbcGenCompose.Controls.Add(outputPage);
+            tbcGenCompose.Location = new Point(1, 2);
+            tbcGenCompose.Name = "tbcGenCompose";
+            tbcGenCompose.SelectedIndex = 0;
+            tbcGenCompose.Size = new Size(760, 600);
+            tbcGenCompose.TabIndex = 0;
+            // 
+            // volumePage
+            // 
+            volumePage.Controls.Add(nextBtn);
+            volumePage.Location = new Point(4, 24);
+            volumePage.Name = "volumePage";
+            volumePage.Padding = new Padding(3);
+            volumePage.Size = new Size(752, 572);
+            volumePage.TabIndex = 2;
+            volumePage.Text = "Configuration des volumes";
+            volumePage.UseVisualStyleBackColor = true;
+            // 
+            // nextBtn
+            // 
+            nextBtn.Location = new Point(652, 541);
+            nextBtn.Name = "nextBtn";
+            nextBtn.Size = new Size(93, 25);
+            nextBtn.TabIndex = 1;
+            nextBtn.Text = "Suivant";
+            nextBtn.UseVisualStyleBackColor = true;
             // 
             // genCompose
             // 
@@ -149,6 +173,7 @@
             setupPage.ResumeLayout(false);
             setupPage.PerformLayout();
             tbcGenCompose.ResumeLayout(false);
+            volumePage.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -159,9 +184,11 @@
         private Button saveFileBtn;
         private RichTextBox composeFileEditor;
         private TabPage setupPage;
-        private Button nxtBtn0;
+        private Button genBtn;
         private TabControl tbcGenCompose;
         private Label srvcLbl;
         private ListBox servicesListBox;
+        private TabPage volumePage;
+        private Button nextBtn;
     }
 }

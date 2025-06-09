@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Accessibility;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,11 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RegUI.models;
 
 namespace RegUI
 {
     public partial class genCompose : Form
     {
+        private List<Volume> volumes = new List<Volume>();
+        private List<Service> services = new List<Service> ();
         public genCompose()
         {
             InitializeComponent();
@@ -48,19 +52,12 @@ namespace RegUI
                 MessageBox.Show("Fichier enregistré");
                 this.Close();
             }
-
-
-
-
-
-
-
-
         }
 
         private void genCompose_Load(object sender, EventArgs e)
         {
-
+            Service service = new Service();
+            service.getComposeService();
         }
     }
 }
