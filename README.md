@@ -23,7 +23,6 @@ a web server.
 
 ### Oncoming features
 
-- [ ] Manage (move / rename ?) repositories tags
 - [ ] Manage Docker registry repositories
 - [ ] Generate a docker compose
 - [ ] Add support for multiples languages (ex: english, espanol, etc...)

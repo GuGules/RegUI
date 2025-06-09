@@ -15,6 +15,9 @@ namespace RegUI
 {
     public partial class genCompose : Form
     {
+
+        public string host_registry;
+
         private List<Volume> volumes = new List<Volume>();
         private List<Service> services = new List<Service> ();
         public genCompose()
@@ -57,6 +60,11 @@ namespace RegUI
         private void genCompose_Load(object sender, EventArgs e)
         {
             Service service = new Service();
+            service.name = Randomer.genRandomName();
+            service.image = "Odoo";
+            service.version = "17.0";
+            service.registry = host_registry;
+
             service.getComposeService();
         }
     }

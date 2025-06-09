@@ -178,8 +178,11 @@ namespace RegUI
 
         private void genComposeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            genCompose gcp = new genCompose();
-            gcp.Show();
+            if (host_registry != null) { 
+                genCompose gcp = new genCompose();
+                gcp.host_registry = host_registry;
+                gcp.Show();
+            }
         }
     }
 }
