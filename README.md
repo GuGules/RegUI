@@ -20,15 +20,16 @@ a web server.
 - [x] Copy docker pull command to clipboard
 - [x] List tags for a repository
 - [x] Generate docker run command
+- [x] Generate a docker compose
 
 ### Oncoming features
 
 - [ ] Manage Docker registry repositories
-- [ ] Generate a docker compose
 - [ ] Add support for multiples languages (ex: english, espanol, etc...)
 - [ ] Add history for run command generation
 - [ ] Create website presentation for the app (and maybe online features...)
 - [ ] Improve UI to upgrade user experience (maybe with [electronjs](https://www.electronjs.org/))
+- [ ] (Improve docker compose with AI)
 - [ ] We will see later for more upgrades...
 
 ## License

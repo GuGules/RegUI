@@ -18,15 +18,41 @@ namespace RegUI
 
         public string host_registry;
 
-        private List<Volume> volumes = new List<Volume>();
-        private List<Service> services = new List<Service> ();
+        private List<Service> services = new List<Service>();
+        private string generatedText = "";
+        private string tab = "  ";
         public genCompose()
         {
             InitializeComponent();
         }
 
-        private void nxtBtn0_Click(object sender, EventArgs e)
+        private void genBtn_Click(object sender, EventArgs e)
         {
+            generatedText = "services:\n";
+            // Génération de la partie de gestion des volumes
+
+            foreach (Service s in services)
+            {
+                generatedText += s.getComposeService();
+            }
+
+            generatedText += "volumes:\n";
+
+            foreach (Service s in services)
+            {
+                foreach (string vol in s.volumes.Keys)
+                {
+                    if (!vol.StartsWith("./"))
+                    {
+                        generatedText += tab + vol + ":\n";
+                    }
+                }
+            }
+
+            // Insertion du texte dans l'éditeur
+            composeFileEditor.Text = generatedText;
+
+            // Affichage du document généré
             tbcGenCompose.SelectTab(1);
         }
 
@@ -59,13 +85,26 @@ namespace RegUI
 
         private void genCompose_Load(object sender, EventArgs e)
         {
-            Service service = new Service();
-            service.name = Randomer.genRandomName();
-            service.image = "Odoo";
-            service.version = "17.0";
-            service.registry = host_registry;
+            servicesListBox.DataSource = services.ToList();
+            servicesListBox.DisplayMember = "name";
+        }
+        private void addServBtn_Click(object sender, EventArgs e)
+        {
+            genServ form = new genServ(host_registry);
+            form.services = services;
+            form.ShowDialog();
+            Service s = form.getService();
+            if (s is not null)
+            {
+                services.Add(s);
+                servicesListBox.DataSource = services.ToList();
+            }
+        }
 
-            service.getComposeService();
+        private void rmServBtn_Click(object sender, EventArgs e)
+        {
+            services.RemoveAt(servicesListBox.SelectedIndex);
+            servicesListBox.DataSource = services.ToList();
         }
     }
 }

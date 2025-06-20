@@ -36,6 +36,7 @@
             repositoriesListBox = new ListBox();
             menuStrip1 = new MenuStrip();
             applicationToolStripMenuItem = new ToolStripMenuItem();
+            paramètresToolStripMenuItem = new ToolStripMenuItem();
             fermerToolStripMenuItem = new ToolStripMenuItem();
             genComposeToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
@@ -99,23 +100,29 @@
             // 
             // applicationToolStripMenuItem
             // 
-            applicationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { fermerToolStripMenuItem });
+            applicationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { paramètresToolStripMenuItem, fermerToolStripMenuItem });
             applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
             applicationToolStripMenuItem.Size = new Size(80, 20);
             applicationToolStripMenuItem.Text = "Application";
             // 
+            // paramètresToolStripMenuItem
+            // 
+            paramètresToolStripMenuItem.Name = "paramètresToolStripMenuItem";
+            paramètresToolStripMenuItem.Size = new Size(180, 22);
+            paramètresToolStripMenuItem.Text = "Paramètres";
+            // 
             // fermerToolStripMenuItem
             // 
             fermerToolStripMenuItem.Name = "fermerToolStripMenuItem";
-            fermerToolStripMenuItem.Size = new Size(111, 22);
+            fermerToolStripMenuItem.Size = new Size(180, 22);
             fermerToolStripMenuItem.Text = "Fermer";
             fermerToolStripMenuItem.Click += fermerToolStripMenuItem_Click;
             // 
             // genComposeToolStripMenuItem
             // 
             genComposeToolStripMenuItem.Name = "genComposeToolStripMenuItem";
-            genComposeToolStripMenuItem.Size = new Size(91, 20);
-            genComposeToolStripMenuItem.Text = "GenCompose";
+            genComposeToolStripMenuItem.Size = new Size(189, 20);
+            genComposeToolStripMenuItem.Text = "Générateur de Docker-Compose";
             genComposeToolStripMenuItem.Click += genComposeToolStripMenuItem_Click;
             // 
             // gestReg
@@ -151,5 +158,6 @@
         private ToolStripMenuItem applicationToolStripMenuItem;
         private ToolStripMenuItem fermerToolStripMenuItem;
         private ToolStripMenuItem genComposeToolStripMenuItem;
+        private ToolStripMenuItem paramètresToolStripMenuItem;
     }
 }
