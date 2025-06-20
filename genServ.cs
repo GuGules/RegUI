@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using RegUI.models;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
+using Docker.DotNet.Models;
 
 namespace RegUI
 {
@@ -52,7 +53,7 @@ namespace RegUI
 
         public async void fetchTags()
         {
-            
+
             // Chargement des tags
             HttpResponseMessage response = await http.GetAsync(host_reg + "v2/" + imageCbx.SelectedItem.ToString() + "/tags/list");
 
@@ -124,26 +125,53 @@ namespace RegUI
 
         private void addEnvVar_Click(object sender, EventArgs e)
         {
-            envVar.Add(envVarTbx.Text.ToUpper(), envValueTbx.Text);
-            envVarDgv.DataSource = envVar.ToList();
-            envVarTbx.Text = "";
-            envValueTbx.Text = "";
+            if (!envVar.Keys.Contains(envVarTbx.Text.ToUpper()))
+            {
+                envVar.Add(envVarTbx.Text.ToUpper(), envValueTbx.Text);
+                envVarDgv.DataSource = envVar.ToList();
+                envVarTbx.Text = "";
+                envValueTbx.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Une variable d'environnement du même nom a déjà été créée", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
         private void addVolume_Click(object sender, EventArgs e)
         {
-            volumes.Add(localVolTbx.Text, containerDirTbx.Text);
-            volDGV.DataSource = volumes.ToList();
-            localVolTbx.Text = "";
-            containerDirTbx.Text = "";
+            if (!volumes.Keys.Contains(localVolTbx.Text))
+            {
+                volumes.Add(localVolTbx.Text, containerDirTbx.Text);
+                volDGV.DataSource = volumes.ToList();
+                localVolTbx.Text = "";
+                containerDirTbx.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Un volume du même nom a déjà été créé", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void addAffectation_Click(object sender, EventArgs e)
         {
-            portsAffectations.Add(localPortInput.Value.ToString(), containerPortInput.Value.ToString());
-            portsDGV.DataSource = portsAffectations.ToList();
-            localPortInput.Value = 0;
-            containerPortInput.Value = 0;
+            if (!portsAffectations.Keys.Contains(localPortInput.Value.ToString()))
+            {
+                if (containerPortInput.Value == 0)
+                {
+                    portsAffectations.Add(localPortInput.Value.ToString(), localPortInput.Value.ToString());
+                }
+                else
+                {
+                    portsAffectations.Add(localPortInput.Value.ToString(), containerPortInput.Value.ToString());
+                }
+                portsDGV.DataSource = portsAffectations.ToList();
+                localPortInput.Value = 0;
+                containerPortInput.Value = 0;
+            } else
+            {
+                MessageBox.Show("Le port a déjà été affecté", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void confirmBtn_Click(object sender, EventArgs e)
@@ -154,7 +182,8 @@ namespace RegUI
                 if (nameTbx.Text != "")
                 {
                     serv.name = nameTbx.Text;
-                }else
+                }
+                else
                 {
                     throw new Exception("Il manque un nom pour le service");
                 }
@@ -168,14 +197,16 @@ namespace RegUI
                 if (imageCbx.Text != "")
                 {
                     serv.image = imageCbx.Text;
-                } else
+                }
+                else
                 {
                     throw new Exception("Aucune image n'a été indiquée");
                 }
                 if (tagCbx.Text != "")
                 {
                     serv.tag = tagCbx.Text;
-                } else
+                }
+                else
                 {
                     throw new Exception("Aucune tag n'a été indiqué");
                 }
@@ -183,9 +214,10 @@ namespace RegUI
 
                 // Fermeture de la fenêtre
                 this.Close();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show("Certaines informations sont manquantes : \n"+ex.Message);
+                MessageBox.Show("Certaines informations sont manquantes : \n" + ex.Message);
             }
         }
 
@@ -197,6 +229,39 @@ namespace RegUI
         private void imageCbx_SelectedIndexChanged(object sender, EventArgs e)
         {
             fetchTags();
+        }
+
+        private void rmAffectation_Click(object sender, EventArgs e)
+        {
+            if (portsDGV.SelectedRows.Count != 0)
+            {
+                string key = portsDGV.SelectedRows[0].Cells[0].Value.ToString() ?? portsDGV.SelectedRows[0].Cells[0].Value.ToString();
+                string value = portsAffectations[key];
+                portsAffectations.Remove(key, out value);
+                portsDGV.DataSource = portsAffectations.ToList();
+            }
+        }
+
+        private void rmVolume_Click(object sender, EventArgs e)
+        {
+            if (volDGV.SelectedRows.Count != 0)
+            {
+                string key = volDGV.SelectedRows[0].Cells[0].Value.ToString() ?? volDGV.SelectedRows[0].Cells[0].Value.ToString();
+                string value = volumes[key];
+                volumes.Remove(key, out value);
+                volDGV.DataSource = volumes.ToList();
+            }
+        }
+
+        private void rmEnvVar_Click(object sender, EventArgs e)
+        {
+            if (envVarDgv.SelectedRows.Count != 0)
+            {
+                string key = envVarDgv.SelectedRows[0].Cells[0].Value.ToString() ?? envVarDgv.SelectedRows[0].Cells[0].Value.ToString();
+                string value = envVar[key];
+                envVar.Remove(key, out value);
+                envVarDgv.DataSource = envVar.ToList();
+            }
         }
     }
 }

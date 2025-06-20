@@ -291,6 +291,7 @@
             rmAffectation.TabIndex = 2;
             rmAffectation.Text = "Supprimer";
             rmAffectation.UseVisualStyleBackColor = true;
+            rmAffectation.Click += rmAffectation_Click;
             // 
             // addAffectation
             // 
@@ -310,8 +311,10 @@
             portsDGV.BackgroundColor = SystemColors.ButtonHighlight;
             portsDGV.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             portsDGV.Location = new Point(0, 0);
+            portsDGV.MultiSelect = false;
             portsDGV.Name = "portsDGV";
             portsDGV.ReadOnly = true;
+            portsDGV.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             portsDGV.Size = new Size(415, 414);
             portsDGV.TabIndex = 0;
             // 
@@ -361,6 +364,7 @@
             rmVolume.TabIndex = 7;
             rmVolume.Text = "Supprimer";
             rmVolume.UseVisualStyleBackColor = true;
+            rmVolume.Click += rmVolume_Click;
             // 
             // addVolume
             // 
@@ -378,7 +382,9 @@
             volDGV.BackgroundColor = SystemColors.ButtonHighlight;
             volDGV.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             volDGV.Location = new Point(3, 3);
+            volDGV.MultiSelect = false;
             volDGV.Name = "volDGV";
+            volDGV.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             volDGV.Size = new Size(405, 420);
             volDGV.TabIndex = 0;
             // 
@@ -428,6 +434,7 @@
             rmEnvVar.TabIndex = 9;
             rmEnvVar.Text = "Supprimer";
             rmEnvVar.UseVisualStyleBackColor = true;
+            rmEnvVar.Click += rmEnvVar_Click;
             // 
             // addEnvVar
             // 
@@ -445,7 +452,9 @@
             envVarDgv.BackgroundColor = SystemColors.ButtonHighlight;
             envVarDgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             envVarDgv.Location = new Point(3, 3);
+            envVarDgv.MultiSelect = false;
             envVarDgv.Name = "envVarDgv";
+            envVarDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             envVarDgv.Size = new Size(405, 428);
             envVarDgv.TabIndex = 1;
             // 

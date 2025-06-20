@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(genCompose));
             outputPage = new TabPage();
-            textBox1 = new TextBox();
+            ai_prompt = new TextBox();
             askAIBtn = new Button();
             copyBtn = new Button();
             saveFileBtn = new Button();
@@ -49,7 +49,7 @@
             // 
             // outputPage
             // 
-            outputPage.Controls.Add(textBox1);
+            outputPage.Controls.Add(ai_prompt);
             outputPage.Controls.Add(askAIBtn);
             outputPage.Controls.Add(copyBtn);
             outputPage.Controls.Add(saveFileBtn);
@@ -62,12 +62,12 @@
             outputPage.Text = "Génération du docker compose";
             outputPage.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // ai_prompt
             // 
-            textBox1.Location = new Point(8, 540);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(630, 23);
-            textBox1.TabIndex = 4;
+            ai_prompt.Location = new Point(8, 540);
+            ai_prompt.Name = "ai_prompt";
+            ai_prompt.Size = new Size(630, 23);
+            ai_prompt.TabIndex = 4;
             // 
             // askAIBtn
             // 
@@ -210,7 +210,7 @@
         private ListBox servicesListBox;
         private Button addServBtn;
         private Button rmServBtn;
-        private TextBox textBox1;
+        private TextBox ai_prompt;
         private Button askAIBtn;
     }
 }

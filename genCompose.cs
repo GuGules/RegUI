@@ -87,6 +87,9 @@ namespace RegUI
         {
             servicesListBox.DataSource = services.ToList();
             servicesListBox.DisplayMember = "name";
+
+            ai_prompt.Hide();
+            askAIBtn.Hide();
         }
         private void addServBtn_Click(object sender, EventArgs e)
         {
