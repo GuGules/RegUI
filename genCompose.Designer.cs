@@ -30,14 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(genCompose));
             outputPage = new TabPage();
-            composeFileEditor = new RichTextBox();
-            saveFileBtn = new Button();
+            ai_prompt = new TextBox();
+            askAIBtn = new Button();
             copyBtn = new Button();
+            saveFileBtn = new Button();
+            composeFileEditor = new RichTextBox();
             setupPage = new TabPage();
-            nxtBtn0 = new Button();
-            tbcGenCompose = new TabControl();
-            servicesListBox = new ListBox();
             srvcLbl = new Label();
+            servicesListBox = new ListBox();
+            addServBtn = new Button();
+            rmServBtn = new Button();
+            genBtn = new Button();
+            tbcGenCompose = new TabControl();
             outputPage.SuspendLayout();
             setupPage.SuspendLayout();
             tbcGenCompose.SuspendLayout();
@@ -45,6 +49,8 @@
             // 
             // outputPage
             // 
+            outputPage.Controls.Add(ai_prompt);
+            outputPage.Controls.Add(askAIBtn);
             outputPage.Controls.Add(copyBtn);
             outputPage.Controls.Add(saveFileBtn);
             outputPage.Controls.Add(composeFileEditor);
@@ -56,23 +62,21 @@
             outputPage.Text = "Génération du docker compose";
             outputPage.UseVisualStyleBackColor = true;
             // 
-            // composeFileEditor
+            // ai_prompt
             // 
-            composeFileEditor.Location = new Point(0, 45);
-            composeFileEditor.Name = "composeFileEditor";
-            composeFileEditor.Size = new Size(749, 521);
-            composeFileEditor.TabIndex = 1;
-            composeFileEditor.Text = "";
+            ai_prompt.Location = new Point(8, 540);
+            ai_prompt.Name = "ai_prompt";
+            ai_prompt.Size = new Size(630, 23);
+            ai_prompt.TabIndex = 4;
             // 
-            // saveFileBtn
+            // askAIBtn
             // 
-            saveFileBtn.Location = new Point(8, 10);
-            saveFileBtn.Name = "saveFileBtn";
-            saveFileBtn.Size = new Size(27, 23);
-            saveFileBtn.TabIndex = 2;
-            saveFileBtn.Text = "💾";
-            saveFileBtn.UseVisualStyleBackColor = true;
-            saveFileBtn.Click += saveFileBtn_Click;
+            askAIBtn.Location = new Point(644, 540);
+            askAIBtn.Name = "askAIBtn";
+            askAIBtn.Size = new Size(102, 23);
+            askAIBtn.TabIndex = 3;
+            askAIBtn.Text = "Demander à l'IA";
+            askAIBtn.UseVisualStyleBackColor = true;
             // 
             // copyBtn
             // 
@@ -84,28 +88,86 @@
             copyBtn.UseVisualStyleBackColor = true;
             copyBtn.Click += copyBtn_Click;
             // 
+            // saveFileBtn
+            // 
+            saveFileBtn.Location = new Point(8, 10);
+            saveFileBtn.Name = "saveFileBtn";
+            saveFileBtn.Size = new Size(27, 23);
+            saveFileBtn.TabIndex = 2;
+            saveFileBtn.Text = "💾";
+            saveFileBtn.UseVisualStyleBackColor = true;
+            saveFileBtn.Click += saveFileBtn_Click;
+            // 
+            // composeFileEditor
+            // 
+            composeFileEditor.Location = new Point(0, 45);
+            composeFileEditor.Name = "composeFileEditor";
+            composeFileEditor.Size = new Size(749, 489);
+            composeFileEditor.TabIndex = 1;
+            composeFileEditor.Text = "";
+            // 
             // setupPage
             // 
             setupPage.Controls.Add(srvcLbl);
             setupPage.Controls.Add(servicesListBox);
-            setupPage.Controls.Add(nxtBtn0);
+            setupPage.Controls.Add(addServBtn);
+            setupPage.Controls.Add(rmServBtn);
+            setupPage.Controls.Add(genBtn);
             setupPage.Location = new Point(4, 24);
             setupPage.Name = "setupPage";
             setupPage.Padding = new Padding(3);
             setupPage.Size = new Size(752, 572);
             setupPage.TabIndex = 0;
-            setupPage.Text = "Choix des services";
+            setupPage.Text = "Configuration des services";
             setupPage.UseVisualStyleBackColor = true;
             // 
-            // nxtBtn0
+            // srvcLbl
             // 
-            nxtBtn0.Location = new Point(636, 540);
-            nxtBtn0.Name = "nxtBtn0";
-            nxtBtn0.Size = new Size(93, 25);
-            nxtBtn0.TabIndex = 0;
-            nxtBtn0.Text = "Générer";
-            nxtBtn0.UseVisualStyleBackColor = true;
-            nxtBtn0.Click += nxtBtn0_Click;
+            srvcLbl.AutoSize = true;
+            srvcLbl.Location = new Point(7, 3);
+            srvcLbl.Name = "srvcLbl";
+            srvcLbl.Size = new Size(58, 15);
+            srvcLbl.TabIndex = 2;
+            srvcLbl.Text = "Services : ";
+            // 
+            // servicesListBox
+            // 
+            servicesListBox.FormattingEnabled = true;
+            servicesListBox.ItemHeight = 15;
+            servicesListBox.Location = new Point(7, 28);
+            servicesListBox.Name = "servicesListBox";
+            servicesListBox.Size = new Size(376, 529);
+            servicesListBox.TabIndex = 1;
+            // 
+            // addServBtn
+            // 
+            addServBtn.Location = new Point(389, 28);
+            addServBtn.Name = "addServBtn";
+            addServBtn.Size = new Size(356, 25);
+            addServBtn.TabIndex = 0;
+            addServBtn.Text = "Ajouter un service";
+            addServBtn.UseVisualStyleBackColor = true;
+            addServBtn.Click += addServBtn_Click;
+            // 
+            // rmServBtn
+            // 
+            rmServBtn.Location = new Point(389, 59);
+            rmServBtn.Name = "rmServBtn";
+            rmServBtn.Size = new Size(356, 25);
+            rmServBtn.TabIndex = 0;
+            rmServBtn.Text = "Supprimer un service";
+            rmServBtn.UseVisualStyleBackColor = true;
+            rmServBtn.Click += rmServBtn_Click;
+            // 
+            // genBtn
+            // 
+            genBtn.Location = new Point(389, 90);
+            genBtn.Name = "genBtn";
+            genBtn.Size = new Size(356, 25);
+            genBtn.TabIndex = 0;
+            genBtn.Text = "Générer";
+            genBtn.UseVisualStyleBackColor = true;
+            genBtn.Click += genBtn_Click;
             // 
             // tbcGenCompose
             // 
@@ -116,24 +178,6 @@
             tbcGenCompose.SelectedIndex = 0;
             tbcGenCompose.Size = new Size(760, 600);
             tbcGenCompose.TabIndex = 0;
-            // 
-            // servicesListBox
-            // 
-            servicesListBox.FormattingEnabled = true;
-            servicesListBox.ItemHeight = 15;
-            servicesListBox.Location = new Point(7, 43);
-            servicesListBox.Name = "servicesListBox";
-            servicesListBox.Size = new Size(332, 259);
-            servicesListBox.TabIndex = 1;
-            // 
-            // srvcLbl
-            // 
-            srvcLbl.AutoSize = true;
-            srvcLbl.Location = new Point(7, 16);
-            srvcLbl.Name = "srvcLbl";
-            srvcLbl.Size = new Size(58, 15);
-            srvcLbl.TabIndex = 2;
-            srvcLbl.Text = "Services : ";
             // 
             // genCompose
             // 
@@ -146,6 +190,7 @@
             Text = "Generation de Docker-Compose";
             Load += genCompose_Load;
             outputPage.ResumeLayout(false);
+            outputPage.PerformLayout();
             setupPage.ResumeLayout(false);
             setupPage.PerformLayout();
             tbcGenCompose.ResumeLayout(false);
@@ -159,9 +204,13 @@
         private Button saveFileBtn;
         private RichTextBox composeFileEditor;
         private TabPage setupPage;
-        private Button nxtBtn0;
+        private Button genBtn;
         private TabControl tbcGenCompose;
         private Label srvcLbl;
         private ListBox servicesListBox;
+        private Button addServBtn;
+        private Button rmServBtn;
+        private TextBox ai_prompt;
+        private Button askAIBtn;
     }
 }
