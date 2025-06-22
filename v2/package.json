@@ -1,0 +1,25 @@
+{
+  "name": "regui",
+  "version": "2.0.0",
+  "description": "An app created for developers to help them manage self-hosted Docker registries",
+  "homepage": "https://github.com/GuGules/RegUI#readme",
+  "bugs": {
+    "url": "https://github.com/GuGules/RegUI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuGules/RegUI.git"
+  },
+  "license": "MIT",
+  "author": "Jules PILLOT",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^36.5.0",
+    "iconoir": "^7.11.0"
+  }
+}
