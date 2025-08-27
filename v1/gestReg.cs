@@ -38,7 +38,7 @@ namespace RegUI
 
         private async void connectRegister()
         {
-            if (regAdrTbx.Text != "") //& (regAdrTbx.Text.StartsWith("http://") || regAdrTbx.Text.StartsWith("https://"))
+            if (regAdrTbx.Text != "")
             {
                 // AJOUT AUTO /
                 if (!regAdrTbx.Text.EndsWith('/'))
@@ -47,6 +47,7 @@ namespace RegUI
                     host_registry = regAdrTbx.Text;
                 }
 
+                // AJOUT AUTO HTTP / HTTPS
                 if (!regAdrTbx.Text.StartsWith("https://"))
                 {
                     if (!regAdrTbx.Text.StartsWith("http://"))
@@ -54,6 +55,7 @@ namespace RegUI
                         // Ajout auto HTTP / HTTPS
                         try
                         {
+                            // TEST HTTPS
                             if (URI_isOK("https://" + host_registry))
                             {
                                 HttpResponseMessage r1 = await http.GetAsync("https://" + host_registry);
@@ -75,6 +77,7 @@ namespace RegUI
                         {
                             try
                             {
+                                // TEST HTTP
                                 if (URI_isOK("http://" + host_registry))
                                 {
                                     HttpResponseMessage r1 = await http.GetAsync("http://" + host_registry);
@@ -101,6 +104,7 @@ namespace RegUI
                     }
                     if (URI_isOK(host_registry))
                     {
+                        // Chargement de la liste des repositories
                         HttpResponseMessage response = await http.GetAsync(host_registry + "/v2/_catalog");
                         if (response.IsSuccessStatusCode)
                         {

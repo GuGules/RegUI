@@ -1,13 +1,18 @@
 using System.Configuration;
-using System.Collections.Specialized;
 
 namespace RegUI
 {
     internal static class Program
     {
-        public static string userLanguage = "en-EN";
+        public static string userLanguage = "fr-FR";
         public static bool history = false;
-        public static string ia_provider = null²;
+        public static string ia_provider = null;
+
+        // Globalisation host registry address
+        public static string host_registry = null;
+
+        // Stockage des informations de connexion
+        public static string authToken = null;
 
         /// <summary>
         ///  The main entry point for the application.
