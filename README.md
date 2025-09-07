@@ -21,13 +21,13 @@ a web server.
 - [x] List tags for a repository
 - [x] Generate docker run command
 - [x] Generate a docker compose
+- [ ] Create website presentation for the app (and maybe online features...)
 
 ### Oncoming features
 
 - [ ] Manage Docker registry repositories
 - [ ] Add support for multiples languages (ex: english, espanol, etc...)
 - [ ] Add history for run command generation
-- [ ] Create website presentation for the app (and maybe online features...)
 - [ ] Improve UI to upgrade user experience (maybe with [electronjs](https://www.electronjs.org/))
 - [ ] (Improve docker compose with AI)
 - [ ] We will see later for more upgrades...
