@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>RegUI</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>RegUI</title>
     <authors>Jules PILLOT</authors>
     <owners>Jules PILLOT</owners>
@@ -11,6 +11,6 @@
     <copyright>2025 Jules PILLOT</copyright>
   </metadata>
   <files>
-    <file src="out\**" target="lib\net45" />
+    <file src="out\**" target="lib\net45"/>
   </files>
 </package>
