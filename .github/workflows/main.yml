@@ -9,17 +9,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Fetch all history for all branches and tags
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-      - name: Install GitVersion
-        run: dotnet tool install --global GitVersion.Tool
-      - name: Run GitVersion
+      - name: Run GitVersion (action)
         id: gitversion
-        run: dotnet-gitversion /showvariable MajorMinorPatch >> $MajorMinorPatch
-      - name: Output version
-        run: echo "New version is ${{ steps.gitversion.outputs.MajorMinorPatch }}"
+        uses: gittools/actions/gitversion/execute@v0.10.0
       - name: Set output for subsequent jobs
         id: set_output
         run: echo "version=${{ steps.gitversion.outputs.MajorMinorPatch }}" >> $GITHUB_OUTPUT
