@@ -17,7 +17,7 @@ jobs:
         run: dotnet tool install --global GitVersion.Tool
       - name: Run GitVersion
         id: gitversion
-        run: gitversion /output json /showvariable MajorMinorPatch
+        run: dotnet-gitversion /output json /showvariable MajorMinorPatch
       - name: Output version
         run: echo "New version is ${{ steps.gitversion.outputs.MajorMinorPatch }}"
       - name: Set output for subsequent jobs
