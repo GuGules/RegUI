@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegUI", "RegUI.csproj", "{2A7EBB25-6CB9-4013-AF71-094CE71310FE}"
 EndProject
-Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "RegUiSetup", "..\RegUiSetup\RegUiSetup.wixproj", "{74715E9B-2D46-43BD-81D6-25739F2F5E91}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

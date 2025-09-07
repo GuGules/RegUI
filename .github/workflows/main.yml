@@ -1,9 +1,9 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: version-pipeline
+run-name: Define the new app version
 on: [push]
 jobs:
   check-bats-version:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

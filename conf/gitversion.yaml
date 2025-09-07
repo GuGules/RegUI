@@ -1,0 +1,70 @@
+# Configuration GitVersion basée sur Conventional Commits
+# Objectif : SemVer (MAJOR.MINOR.PATCH) avec mapping des types de commit conventionnels
+mode: ContinuousDelivery
+tag-prefix: '[vV]?'
+commit-date-format: yyyy-MM-dd
+commit-message-incrementing: Enabled
+semantic-version-format: Strict
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatch
+update-build-number: true
+
+# Mappage des messages de commit Conventional Commits => incréments de version
+# Major : commits marqués par un breaking change (BREAKING CHANGE) ou par un "!" dans le type
+major-version-bump-message: '(?i)(BREAKING CHANGE)|!'
+# Minor : feat(...) :
+minor-version-bump-message: '(?i)^\s*feat(\(.+\))?:'
+# Patch : fix(...) ou perf(...)
+patch-version-bump-message: '(?i)^\s*(fix|perf)(\(.+\))?:'
+# Pas d'incrément : types non-fonctionnels (chore, docs, style, refactor, test, build, ci)
+no-bump-message: '(?i)^\s*(chore|docs|style|refactor|test|build|ci)(\(.+\))?:'
+
+# Branches courantes (valeurs adaptées au workflow GitHub/GitFlow minimal)
+branches:
+  main:
+    regex: ^master$|^main$
+    increment: Patch
+    prevent-increment:
+      of-merged-branch: true
+    track-merge-message: true
+    is-main-branch: true
+    label: ''
+  develop:
+    regex: ^dev(elop)?(ment)?$
+    increment: Minor
+    track-merge-message: true
+    label: 'alpha'
+  feature:
+    regex: ^features?[\/-](?<BranchName>.+)
+    increment: Inherit
+    label: '{BranchName}'
+    track-merge-message: true
+  release:
+    regex: ^releases?[\/-](?<BranchName>.+)
+    mode: ManualDeployment
+    increment: Patch
+    is-release-branch: true
+    track-merge-message: false
+  hotfix:
+    regex: ^hotfix(es)?[\/-](?<BranchName>.+)
+    increment: Patch
+    track-merge-message: false
+  pull-request:
+    regex: ^(pull-requests|pull|pr)[\/-](?<Number>\d*)
+    increment: Inherit
+    label: 'PullRequest{Number}'
+    track-merge-message: true
+
+# Stratégies de détermination de version (ordre conservateur)
+strategies:
+  - Fallback
+  - ConfiguredNextVersion
+  - MergeMessage
+  - TaggedCommit
+  - TrackReleaseBranches
+  - VersionInBranchName
+
+# Ignorer aucun SHA/path par défaut (adapter en monorepo si nécessaire)
+ignore:
+  sha: []
+  paths: []
