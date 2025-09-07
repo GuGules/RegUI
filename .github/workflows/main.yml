@@ -2,12 +2,54 @@ name: version-pipeline
 run-name: Define the new app version
 on: [push]
 jobs:
-  check-bats-version:
+  define-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          node-version: '20'
-      - run: pwd
-      - run: ls -l
+          fetch-depth: 0  # Fetch all history for all branches and tags
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install GitVersion
+        run: dotnet tool install --global GitVersion.Tool --version 5.13.1
+      - name: Run GitVersion
+        id: gitversion
+        run: gitversion /output json /showvariable MajorMinorPatch
+      - name: Output version
+        run: echo "New version is ${{ steps.gitversion.outputs.MajorMinorPatch }}"
+      - name: Set output for subsequent jobs
+        id: set_output
+        run: echo "version=${{ steps.gitversion.outputs.MajorMinorPatch }}" >> $GITHUB_OUTPUT
+    outputs:
+      version: ${{ steps.set_output.outputs.version }}
+  write_version:
+    needs: define-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install NuGet CLI
+        run: |
+          wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -O nuget.exe
+      - name: Update and pack NuSpec
+        run: |
+          $version = '${{ needs.define-version.outputs.version }}'
+          [xml]$nuspec = Get-Content 'RegUI.nuspec'
+          $nuspec.package.metadata.version = $version
+          $nuspec.Save('RegUI.nuspec')
+      - name: Send to Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add RegUI.nuspec
+          git commit -m "chore: update version to ${{ needs.define-version.outputs.version }}"
+          git push

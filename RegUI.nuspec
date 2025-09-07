@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RegUI</id>
+    <version>1.0.0</version>
+    <title>RegUI</title>
+    <authors>Jules PILLOT</authors>
+    <owners>Jules PILLOT</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Un outil de gestion des registres Docker</description>
+    <copyright>2025 Jules PILLOT</copyright>
+  </metadata>
+  <files>
+    <file src="out\**" target="lib\net45" />
+  </files>
+</package>
