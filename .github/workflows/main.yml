@@ -40,12 +40,16 @@ jobs:
       - name: Install NuGet CLI
         run: |
           wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -O nuget.exe
-      - name: Update and pack NuSpec
+      - name: Update NuSpec (linux, bash + xmlstarlet)
         run: |
-          $version = '${{ needs.define-version.outputs.version }}'
-          [xml]$nuspec = Get-Content 'RegUI.nuspec'
-          $nuspec.package.metadata.version = $version
-          $nuspec.Save('RegUI.nuspec')
+          version='${{ needs.define-version.outputs.version }}'
+          echo "Updating RegUI.nuspec to $version"
+          sudo apt-get update -y
+          sudo apt-get install -y xmlstarlet
+          # édite la balise <version> en place
+          xmlstarlet ed -L -u '/package/metadata/version' -v "$version" RegUI.nuspec
+          git add RegUI.nuspec
+          git commit -m "chore: update version to $version" || echo "no changes to commit"
       - name: Send to Git
         run: |
           git config --global user.name 'github-actions[bot]'
