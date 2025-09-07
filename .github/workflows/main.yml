@@ -1,6 +1,9 @@
 name: version-pipeline
 run-name: Define the new app version
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'RegUI.nuspec'
 jobs:
   define-version:
     runs-on: ubuntu-latest
