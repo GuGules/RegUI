@@ -17,12 +17,7 @@ namespace RegUI
 {
     public partial class gestReg : Form
     {
-        /*
-            * Classe principale de l'application
-            * Permet la gestion d'un registre docker
-            * 
-            * Auteur : Jules PILLOT
-            */
+        
         public gestReg()
         {
             InitializeComponent();
