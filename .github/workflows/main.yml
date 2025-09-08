@@ -80,5 +80,5 @@ jobs:
           echo "Creating tag $version"
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git tag "v$version"
+          git tag "$version"
           git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" "$version"
