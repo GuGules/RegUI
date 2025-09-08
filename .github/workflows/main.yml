@@ -21,6 +21,9 @@ jobs:
       - name: Run GitVersion (action)
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.10.0
+        with:
+          useConfigFile: true
+          configFilePath: './conf/gitversion.yaml'
       - name: Output version
         run: echo "New version is ${{ steps.gitversion.outputs.MajorMinorPatch }}"
       - name: Set output for subsequent jobs
