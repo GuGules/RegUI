@@ -62,3 +62,21 @@ jobs:
           git add RegUI.nuspec
           git commit -m "chore: update version to ${{ needs.define-version.outputs.version }}"
           git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" main
+  create-tag:
+    needs: write_version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+          token: ${{ secrets.TOKEN }}      # utilise le PAT pour les actions Git
+          persist-credentials: true
+      - name: Create Tag
+        run: |
+          version='${{ needs.define-version.outputs.version }}'
+          echo "Creating tag v$version"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git tag "v$version"
+          git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" "v$version"
