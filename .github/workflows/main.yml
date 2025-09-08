@@ -28,9 +28,11 @@ jobs:
         run: echo "version=${{ steps.gitversion.outputs.MajorMinorPatch }}" >> $GITHUB_OUTPUT
     outputs:
       version: ${{ steps.set_output.outputs.version }}
-  write_version:
+  write-version:
     needs: define-version
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ needs.define-version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -63,7 +65,7 @@ jobs:
           git commit -m "chore: update version to ${{ needs.define-version.outputs.version }}"
           git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" main
   create-tag:
-    needs: write_version
+    needs: write-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -74,9 +76,9 @@ jobs:
           persist-credentials: true
       - name: Create Tag
         run: |
-          version='${{ needs.define-version.outputs.version }}'
-          echo "Creating tag v$version"
+          version='${{ needs.write-version.outputs.version }}'
+          echo "Creating tag $version"
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git tag "v$version"
-          git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" "v$version"
+          git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" "$version"
