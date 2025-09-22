@@ -1,8 +1,9 @@
 name: Packaging pipeline
 run-name: Package the new version of the application
 on:
-    tag:
-        -'*.*.*'
+  push:
+    tags:
+      - '*.*.*'
 jobs:
     build:
         runs-on: windows-latest
