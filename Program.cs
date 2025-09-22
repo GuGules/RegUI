@@ -23,8 +23,9 @@ namespace RegUI
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+             
+            // Loading Configuration
             ApplicationConfiguration.Initialize();
-
             // Chargement de la configuration de l'application
             userLanguage = ConfigurationManager.AppSettings.Get("userLanguage");
 
