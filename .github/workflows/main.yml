@@ -4,6 +4,8 @@ on:
   push:
     paths-ignore:
       - 'RegUI.nuspec'
+    tags-ignore:
+      - '*.*.*'
 jobs:
   define-version:
     runs-on: ubuntu-latest
