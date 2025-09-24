@@ -16,6 +16,7 @@ namespace RegUI
 
         /// <summary>
         ///  The main entry point for the application.
+        ///  Load Configuration at startup
         /// </summary>
         [STAThread]
 
