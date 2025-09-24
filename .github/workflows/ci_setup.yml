@@ -32,7 +32,7 @@ jobs:
             - name: Create installer
               run: |
                 .\tools\squirrel.windows.2.0.1\tools\Squirrel.exe --releasify .\out\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir $((Get-Location).Path)\Releases
-                dir
+                dir .\tools\squirrel.windows.2.0.1\tools\
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
               with:
