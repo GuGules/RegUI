@@ -33,10 +33,10 @@ jobs:
               run: |
                 $version = (git describe --tags --abbrev=0)
                 $releaseDir = (Get-Location).Path + "\Releases"
+                echo "Creating installer for version $version in $releaseDir"
                 .\tools\squirrel.windows.2.0.1\tools\squirrel.exe --releasify .\out\RegUI.$version.nupkg --releaseDir $releaseDir
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
-
               with:
                   name: RegUI-Setup
                   path: .\Releases
