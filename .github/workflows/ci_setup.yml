@@ -23,14 +23,14 @@ jobs:
             - name: Build the project
               run: dotnet build RegUI.sln --configuration Release
             - name: Publish the app
-              run: dotnet publish ./RegUI.csproj --configuration Release --self-contained true --output ./output_dir
+              run: dotnet publish .\RegUI.csproj --configuration Release --self-contained true --output .\output_dir
             - name: Create nuget package
-              run: nuget pack ./RegUI.nuspec -OutputDirectory ./out
+              run: nuget pack .\RegUI.nuspec -OutputDirectory .\out
               # make installer with squirrel
             - name: Create installer
               run: |
                   nuget install Squirrel -Version 2.0.1 -OutputDirectory tools
-                  .\tools\Squirrel.2.0.1\tools\squirrel --releasify .\out\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir .\Releases
+                  .\tools\Squirrel.2.0.1\tools\squirrel --releasify .\output_dir\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir .\Releases
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
               with:
