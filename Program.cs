@@ -9,7 +9,7 @@ namespace RegUI
         public static string ia_provider = null;
 
         // Globalisation host registry address
-        public static string host_registry = null;
+        public static string host_registry = "";
 
         // Stockage des informations de connexion
         public static string authToken = null;
