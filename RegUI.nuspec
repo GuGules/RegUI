@@ -11,6 +11,6 @@
     <copyright>2025 Jules PILLOT</copyright>
   </metadata>
   <files>
-    <file src="out\**" target="lib\net45"/>
+    <file src="published\**" target="lib\net45"/>
   </files>
 </package>
