@@ -17,9 +17,6 @@ jobs:
               uses: actions/setup-dotnet@v3
               with:
                   dotnet-version: '8.0.x'
-            - name: Get latest tag
-              id: get_tag
-              uses: actions-ecosystem/action-get-latest-tag@v1
             - name: Install NuGet CLI
               run: |
                   wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -O nuget.exe
@@ -33,7 +30,7 @@ jobs:
             - name: Create installer
               run: |
                   nuget install Squirrel -Version 2.0.1 -OutputDirectory tools
-                  .\tools\Squirrel.2.0.1\tools\squirrel --releasify .\out\RegUI${{ steps.get_tag.outputs.tag }}.nupkg --releaseDir .\Releases
+                  .\tools\Squirrel.2.0.1\tools\squirrel --releasify .\out\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir .\Releases
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
               with:
