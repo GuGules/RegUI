@@ -2,9 +2,9 @@ name: Packaging pipeline
 run-name: Package the new version of the application
 on:
   push:
+    workflow_dispatch:
     tags:
       - '*.*.*'  # Match versions like 1.0.0, 2.3.4, etc.
-    workflow_dispatch:
 jobs:
     build:
         runs-on: windows-latest

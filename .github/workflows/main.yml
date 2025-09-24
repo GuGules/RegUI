@@ -6,6 +6,7 @@ on:
       - 'RegUI.nuspec'
     tags-ignore:
       - '*.*.*'
+  workflow_dispatch:  # Permet le déclenchement manuel
 jobs:
   define-version:
     runs-on: ubuntu-latest
