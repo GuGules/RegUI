@@ -30,7 +30,7 @@ jobs:
             - name: Create installer
               run: |
                   nuget install squirrel.windows -Version 2.0.1 -OutputDirectory tools -Source https://api.nuget.org/v3/index.json
-                  dir .\tools\squirrel.2.0.1
+                  dir .\tools\squirrel.windows.2.0.1
         #          .\tools\Squirrel.2.0.1\tools\squirrel.exe --releasify .\out\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir .\Releases
         #    - name: Upload Release Asset
         #      uses: actions/upload-artifact@v4
