@@ -25,7 +25,7 @@ jobs:
             - name: Publish the app
               run: dotnet publish ./RegUI.csproj --configuration Release --self-contained true --output ./output_dir
             - name: Create nuget package
-              run: nuget pack ./RegUI/RegUI.nuspec -OutputDirectory ./out
+              run: nuget pack ./RegUI.nuspec -OutputDirectory ./out
               # make installer with squirrel
             - name: Create installer
               run: |
