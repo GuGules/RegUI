@@ -1,0 +1,89 @@
+name: version-pipeline
+run-name: Define the new app version
+on:
+  push:
+    paths-ignore:
+      - 'RegUI.nuspec'
+    tags-ignore:
+      - '*.*.*'
+jobs:
+  define-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install GitVersion
+        run: dotnet tool install --global GitVersion.Tool
+      - name: Run GitVersion (action)
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.10.0
+        with:
+          useConfigFile: true
+          configFilePath: './conf/gitversion.yaml'
+      - name: Output version
+        run: echo "New version is ${{ steps.gitversion.outputs.MajorMinorPatch }}"
+      - name: Set output for subsequent jobs
+        id: set_output
+        run: echo "version=${{ steps.gitversion.outputs.MajorMinorPatch }}" >> $GITHUB_OUTPUT
+    outputs:
+      version: ${{ steps.set_output.outputs.version }}
+  write-version:
+    needs: define-version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ needs.define-version.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+          token: ${{ secrets.TOKEN }}      # utilise le PAT pour les actions Git
+          persist-credentials: true
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install NuGet CLI
+        run: |
+          wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -O nuget.exe
+      - name: Update NuSpec (linux, bash + xmlstarlet)
+        run: |
+          version='${{ needs.define-version.outputs.version }}'
+          echo "Updating RegUI.nuspec to $version"
+          sudo apt-get update -y
+          sudo apt-get install -y xmlstarlet
+          # édite la balise <version> en place
+          xmlstarlet ed -L -u '/package/metadata/version' -v "$version" RegUI.nuspec
+          git add RegUI.nuspec
+          git commit -m "chore: update version to $version" || echo "no changes to commit"
+      - name: Send to Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add RegUI.nuspec
+          git commit -m "chore: update version to ${{ needs.define-version.outputs.version }}"
+          git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" main
+  create-tag:
+    needs: write-version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+          token: ${{ secrets.TOKEN }}      # utilise le PAT pour les actions Git
+          persist-credentials: true
+      - name: Create Tag
+        run: |
+          version='${{ needs.write-version.outputs.version }}'
+          echo "Creating tag $version"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git tag "$version"
+          git push "https://x-access-token:${{ secrets.TOKEN }}@github.com/GuGules/RegUI.git" "$version"
