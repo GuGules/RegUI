@@ -31,8 +31,8 @@ jobs:
                 nuget install squirrel.windows -Version 2.0.1 -OutputDirectory tools -Source https://api.nuget.org/v3/index.json
             - name: Create installer
               run: |
-                git describe --tags --abbrev=0
-                .\tools\squirrel.windows.2.0.1\tools\Squirrel.exe --releasify .\out\RegUI$(git describe --tags --abbrev=0).nupkg --releaseDir $((Get-Location).Path)\Releases
+                $version = git describe --tags --abbrev=0
+                .\tools\squirrel.windows.2.0.1\tools\Squirrel.exe --releasify .\out\RegUI.$version.nupkg --releaseDir $((Get-Location).Path)\Releases
                 dir .\tools\squirrel.windows.2.0.1\tools\
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
