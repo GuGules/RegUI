@@ -6,7 +6,7 @@ namespace RegUI
     {
         public static string userLanguage = "fr-FR";
         public static bool history = false;
-        public static string ia_provider = null;
+        public static string ia_provider = string.Empty;
 
         // Globalisation host registry address
         public static string host_registry = string.Empty;
