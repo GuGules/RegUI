@@ -17,6 +17,9 @@ jobs:
               uses: actions/setup-dotnet@v3
               with:
                   dotnet-version: '8.0.x'
+            - name : Get latest tag
+              id: get_latest_tag
+              run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
             - name: Install NuGet CLI
               run: |
                 Invoke-WebRequest -Uri https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
@@ -32,10 +35,10 @@ jobs:
             - name: Create installer
               run: |
                 echo " .\tools\squirrel.windows.2.0.1\tools\Squirrel.exe --releasify .\out\RegUI.$(git describe --tags --abbrev=0).nupkg --releaseDir $((Get-Location).Path)\Releases"
-                .\tools\squirrel.windows.2.0.1\tools\Squirrel.exe --releasify .\out\RegUI.$(git describe --tags --abbrev=0).nupkg --releaseDir $((Get-Location).Path)\Releases
-                dir .\tools\squirrel.windows.2.0.1\tools\
+                .\tools\squirrel.windows.2.0.1\tools\squirrel.exe --releasify .\out\RegUI.${{ steps.get_latest_tag.outputs.tag }}.nupkg --releaseDir $((Get-Location).Path)\Releases
             - name: Upload Release Asset
               uses: actions/upload-artifact@v4
+
               with:
                   name: RegUI-Setup
                   path: .\Releases
