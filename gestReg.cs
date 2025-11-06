@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Text.Json;
-using RegUI.models;
+﻿using System.Text.Json;
 using System.Text.RegularExpressions;
-using static System.Net.WebRequestMethods;
+using RegUI.models;
 
 namespace RegUI
 {

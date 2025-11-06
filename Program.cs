@@ -1,4 +1,5 @@
 using System.Configuration;
+using RegUI.localStorage;
 
 namespace RegUI
 {
@@ -28,6 +29,9 @@ namespace RegUI
             // Loading Configuration
             ApplicationConfiguration.Initialize();
             // Chargement de la configuration de l'application
+
+            LocalStorage localStorage = new LocalStorage();
+
             userLanguage = ConfigurationManager.AppSettings.Get("userLanguage");
 
 
