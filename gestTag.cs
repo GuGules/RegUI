@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using RegUI.models;
+using RegUI.models.APIConnector.Registry;
 
 namespace RegUI
 {

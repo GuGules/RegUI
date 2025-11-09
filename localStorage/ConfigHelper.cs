@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegUI.models
+namespace RegUI.localStorage;
+public class ConfigHelper
 {
-    public class CatalogResponse
-    {
-        public List<string> repositories { get; set; }
-    }
 }

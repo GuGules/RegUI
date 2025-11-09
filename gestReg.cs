@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
+﻿using RegUI.models.APIConnector.Registry;
+using RegUI.regManager;
+using System.Text.Json;
 using System.Text.RegularExpressions;
-using RegUI.models;
 
 namespace RegUI
 {
@@ -31,7 +32,30 @@ namespace RegUI
             return Regex.IsMatch(url, @"^https?://((localhost:?\d+)|.+\..+)");
         }
 
-        private async void connectRegister()
+        private async void loadRegistry()
+        {
+            if (URI_isOK(host_registry))
+            {
+                // Chargement de la liste des repositories
+                HttpResponseMessage response = await http.GetAsync(host_registry + "/v2/_catalog");
+                if (response.IsSuccessStatusCode)
+                {
+                    string stringRes = await response.Content.ReadAsStringAsync();
+                    var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
+
+                    if (catalog != null && catalog.repositories != null)
+                    {
+                        repositoriesListBox.Items.Clear();
+                        foreach (var repo in catalog.repositories)
+                        {
+                            repositoriesListBox.Items.Add(repo);
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void connectRegistry(object? sender = null, EventArgs? e = null)
         {
             if (regAdrTbx.Text != "")
             {
@@ -97,25 +121,7 @@ namespace RegUI
                             }
                         }
                     }
-                    if (URI_isOK(host_registry))
-                    {
-                        // Chargement de la liste des repositories
-                        HttpResponseMessage response = await http.GetAsync(host_registry + "/v2/_catalog");
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string stringRes = await response.Content.ReadAsStringAsync();
-                            var catalog = JsonSerializer.Deserialize<CatalogResponse>(stringRes);
-
-                            if (catalog != null && catalog.repositories != null)
-                            {
-                                repositoriesListBox.Items.Clear();
-                                foreach (var repo in catalog.repositories)
-                                {
-                                    repositoriesListBox.Items.Add(repo);
-                                }
-                            }
-                        }
-                    }
+                    loadRegistry();
                 }
                 else
                 {
@@ -126,11 +132,6 @@ namespace RegUI
             {
                 MessageBox.Show("Veuillez renseigner une URL valide pour le registre \n\nExemple : http[s]://registre.domain.com/", "Adresse de registre invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void fetchBtn_Click(object sender, EventArgs e)
-        {
-            connectRegister();
         }
 
         private void tagsManBtn_Click(object sender, EventArgs e)
@@ -153,10 +154,6 @@ namespace RegUI
             }
         }
 
-        private async void gestReg_Load(object sender, EventArgs e)
-        {
-        }
-
         private void delBtn_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Fonctionnalité en cours de développement", "A venir...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -166,7 +163,7 @@ namespace RegUI
         {
             if (e.KeyCode == Keys.Enter)
             {
-                connectRegister();
+                connectRegistry();
             }
         }
 
@@ -177,10 +174,29 @@ namespace RegUI
 
         private void genComposeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (host_registry != null) { 
+            if (host_registry != null)
+            {
                 genCompose gcp = new genCompose();
                 gcp.host_registry = host_registry;
                 gcp.Show();
+            }
+        }
+
+        private void regManagerStripMenu_Click(object sender, EventArgs e)
+        {
+            RegistryManager r = new();
+            r.Show();
+        }
+
+        private void seConnecterÀUnRegistreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegistrySelector r = new();
+            r.ShowDialog();
+            if (r.closeCode == 0)
+            {
+                host_registry = r.getSelectedRegistryUrl();
+                regAdrTbx.Text = host_registry;
+                loadRegistry();
             }
         }
     }

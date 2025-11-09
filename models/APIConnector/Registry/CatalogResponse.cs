@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegUI.models
+namespace RegUI.models.APIConnector.Registry
 {
-    class TagsResponse
+    public class CatalogResponse
     {
-        public string name { get; set; }
-        public List<string> tags { get; set; }
-
+        public List<string> repositories { get; set; }
     }
 }

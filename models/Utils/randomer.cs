@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegUI.models
+namespace RegUI.models.Utils
 {
     public static class Randomer
     {
-        public static List<String> adjectives = new List<string>
+        public static List<string> adjectives = new List<string>
         {
              "Big", "Small", "Strong", "Weak", "Beautiful", "Ugly", "Old", "Young", "Tall", "Short",
             "Fast", "Slow", "Smart", "Dumb", "Clean", "Dirty", "Kind", "Mean", "Polite", "Rude",

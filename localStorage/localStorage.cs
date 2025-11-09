@@ -1,10 +1,12 @@
 ﻿using Microsoft.Data.Sqlite;
+using RegUI.models;
+using System.Data;
 
 namespace RegUI.localStorage
 {
-    public class LocalStorage
+    public abstract class LocalStorage
     {
-        private SqliteConnection context;
+        protected SqliteConnection context;
 
         public LocalStorage()
         {
@@ -25,12 +27,8 @@ namespace RegUI.localStorage
                     ";
                     cmd.ExecuteNonQuery();
                 }
+                context.Close();
             }
-        }
-
-        public void CreateRegistry(string name, string url, bool secured, string? username, string? password)
-        {
-            MessageBox.Show("TODO");
         }
     }
 }

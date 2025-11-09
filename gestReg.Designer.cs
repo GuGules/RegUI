@@ -36,6 +36,8 @@
             repositoriesListBox = new ListBox();
             menuStrip1 = new MenuStrip();
             applicationToolStripMenuItem = new ToolStripMenuItem();
+            seConnecterÀUnRegistreToolStripMenuItem = new ToolStripMenuItem();
+            regManagerStripMenu = new ToolStripMenuItem();
             paramètresToolStripMenuItem = new ToolStripMenuItem();
             fermerToolStripMenuItem = new ToolStripMenuItem();
             genComposeToolStripMenuItem = new ToolStripMenuItem();
@@ -78,7 +80,7 @@
             fetchBtn.TabIndex = 4;
             fetchBtn.Text = "Charger les repositories";
             fetchBtn.UseVisualStyleBackColor = true;
-            fetchBtn.Click += fetchBtn_Click;
+            fetchBtn.Click += connectRegistry;
             // 
             // repositoriesListBox
             // 
@@ -100,21 +102,35 @@
             // 
             // applicationToolStripMenuItem
             // 
-            applicationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { paramètresToolStripMenuItem, fermerToolStripMenuItem });
+            applicationToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { seConnecterÀUnRegistreToolStripMenuItem, regManagerStripMenu, paramètresToolStripMenuItem, fermerToolStripMenuItem });
             applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
             applicationToolStripMenuItem.Size = new Size(80, 20);
             applicationToolStripMenuItem.Text = "Application";
             // 
+            // seConnecterÀUnRegistreToolStripMenuItem
+            // 
+            seConnecterÀUnRegistreToolStripMenuItem.Name = "seConnecterÀUnRegistreToolStripMenuItem";
+            seConnecterÀUnRegistreToolStripMenuItem.Size = new Size(210, 22);
+            seConnecterÀUnRegistreToolStripMenuItem.Text = "Se connecter à un registre";
+            seConnecterÀUnRegistreToolStripMenuItem.Click += seConnecterÀUnRegistreToolStripMenuItem_Click;
+            // 
+            // regManagerStripMenu
+            // 
+            regManagerStripMenu.Name = "regManagerStripMenu";
+            regManagerStripMenu.Size = new Size(210, 22);
+            regManagerStripMenu.Text = "Registres Sauvegardés";
+            regManagerStripMenu.Click += regManagerStripMenu_Click;
+            // 
             // paramètresToolStripMenuItem
             // 
             paramètresToolStripMenuItem.Name = "paramètresToolStripMenuItem";
-            paramètresToolStripMenuItem.Size = new Size(180, 22);
+            paramètresToolStripMenuItem.Size = new Size(210, 22);
             paramètresToolStripMenuItem.Text = "Paramètres";
             // 
             // fermerToolStripMenuItem
             // 
             fermerToolStripMenuItem.Name = "fermerToolStripMenuItem";
-            fermerToolStripMenuItem.Size = new Size(180, 22);
+            fermerToolStripMenuItem.Size = new Size(210, 22);
             fermerToolStripMenuItem.Text = "Fermer";
             fermerToolStripMenuItem.Click += fermerToolStripMenuItem_Click;
             // 
@@ -140,7 +156,6 @@
             MainMenuStrip = menuStrip1;
             Name = "gestReg";
             Text = "RegUI";
-            Load += gestReg_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -159,5 +174,7 @@
         private ToolStripMenuItem fermerToolStripMenuItem;
         private ToolStripMenuItem genComposeToolStripMenuItem;
         private ToolStripMenuItem paramètresToolStripMenuItem;
+        private ToolStripMenuItem regManagerStripMenu;
+        private ToolStripMenuItem seConnecterÀUnRegistreToolStripMenuItem;
     }
 }
